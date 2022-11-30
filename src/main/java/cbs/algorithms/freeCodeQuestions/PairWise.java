@@ -1,4 +1,4 @@
-package cbs.interview.algorithms;
+package cbs.algorithms.freeCodeQuestions;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,9 +1,7 @@
-package cbs.interview.algorithms;
+package cbs.algorithms.freeCodeQuestions;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 public class Permutations {
     /*
