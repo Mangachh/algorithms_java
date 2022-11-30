@@ -11,9 +11,18 @@ public class App
 {
     public static void main( String[] args )
     {
-        DynamicArray<String> list = new DynamicArray<String>(20);
-        list.putAt(0, "hola");
-        System.out.println(list.getAt(0));
+        List<String> list = new List<>(100);
+        list.add("Hola");
+        list.add("Adiós");
+        list.add("Enga ya");
+
+        for(String s: list){
+            if(s != null){
+                System.out.println(s);
+            }else{
+                System.out.println("null");
+            }
+        }
         
     }
 }
