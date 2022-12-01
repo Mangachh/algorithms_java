@@ -1,6 +1,7 @@
 package cbs.algorithms.collections;
 
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 public class SLinkedList<T> implements ICollection<T>{
 
@@ -63,9 +64,27 @@ public class SLinkedList<T> implements ICollection<T>{
     }
 
     @Override
-    public Iterator iterator() {
-        // TODO Auto-generated method stub
-        return null;
+    public Iterator<T> iterator() {
+        return new Iterator<T>() {
+            private SLinkedNode<T> current = head;     
+            private int i = 0;       
+ 
+            @Override
+            public boolean hasNext(){
+                 return hasNextO(i);
+            }
+ 
+            @Override
+            public T next(){
+             if (hasNext() == false){
+                 throw new NoSuchElementException();
+             }
+             T data = current.getData();
+             current = current.getNext();
+             i++;
+             return data;
+            }
+         };
     }
 
 
@@ -97,8 +116,7 @@ public class SLinkedList<T> implements ICollection<T>{
     }
     @Override
     public boolean hasNextO(int index) {
-        // TODO Auto-generated method stub
-        return false;
+        return index < this.count;
     }
     @Override
     public T[] toArray(Class<T> datatype) {

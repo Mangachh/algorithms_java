@@ -89,6 +89,11 @@ public class App
         System.out.println("\nPonemos -1 como cabeza de cartel");
         list.prepending("-1");
         System.out.println(list.toString());
+
+        System.out.println("\nsCheck iterator");
+        for(String s: list){
+            System.out.println(s);
+        }
     }
 
     
