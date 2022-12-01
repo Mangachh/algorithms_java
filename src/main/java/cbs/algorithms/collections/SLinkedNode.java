@@ -9,8 +9,6 @@ public class SLinkedNode<T> {
         this.data = data;
     }
 
-
-
     public SLinkedNode<T> getNext(){
         return next;
     }
@@ -27,8 +25,13 @@ public class SLinkedNode<T> {
         this.next = newNode;
     }
 
-    
+    public void setNextNode(final SLinkedNode<T> node){
+        this.next = node;
+    }
+
     public T getData(){
         return this.data;
     }
+
+    
 }

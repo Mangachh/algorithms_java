@@ -24,6 +24,18 @@ public class SLinkedList<T> implements ICollection<T>{
         this.count++;
     }
 
+    public void prepending(final T data){
+        SLinkedNode<T> newHead = new SLinkedNode<T>(data);
+        newHead.setNextNode(head);
+        this.head = newHead;
+
+        if(tail == null){
+            tail = head;
+        }
+
+        count++;
+    }
+
     public int getCount(){
         return this.count;
     }
@@ -37,6 +49,7 @@ public class SLinkedList<T> implements ICollection<T>{
         StringBuilder builder = new StringBuilder();
         builder.append(STRING_START);
         // todo esto se puede hacer con recursión
+        
         SLinkedNode<T> temp = head;
         for(int i = 0; i < this.count; i++){
             builder.append(temp.getData().toString());
@@ -54,6 +67,8 @@ public class SLinkedList<T> implements ICollection<T>{
         // TODO Auto-generated method stub
         return null;
     }
+
+
     @Override
     public T getAt(int index) {
         if(index > count){

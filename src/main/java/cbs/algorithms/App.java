@@ -73,13 +73,22 @@ public class App
     private static void checkSLinked(){
         SLinkedList<String> list = new SLinkedList<>();
         System.out.println(list.toString());
+        list.append("Cero");
         list.append("Uno");
         list.append("Dos");
         list.append("Tres");
         list.append("Cuatro");
 
+        System.out.println("\nTo String para toda la lista y el count");
         System.out.println(list.toString());
         System.out.println(list.getCount());
+
+        System.out.println("\nPillamos el índice 2");
+        System.out.println(list.getAt(2));
+
+        System.out.println("\nPonemos -1 como cabeza de cartel");
+        list.prepending("-1");
+        System.out.println(list.toString());
     }
 
     
