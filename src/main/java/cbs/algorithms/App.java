@@ -7,15 +7,34 @@ public class App
 {
     public static void main( String[] args )
     {
-        List<String> list = new List<String>(5);
-        list.add("Hola");
-        list.add("Adiós");
-        list.add("Enga ya");
-        String[] array = list.toArray(String.class);
+        //checkDynamicArray();
+        checkList();
+        
+    }
 
-        for(String s : array){
+    private static void checkDynamicArray(){
+        DynamicArray<String> array = new DynamicArray<>(3);
+        array.putAt(0, "Hola");
+        array.putAt(1, "Adiós");
+        array.putAt(2, "Pepote");
+
+        array.pushAt(1, "new string");
+
+        for(String s: array){
             System.out.println(s);
         }
-        
+    }
+
+    private static void checkList(){
+        List<String> list = new List<>(30);
+        list.add("Hola");
+        list.add("Adiós");
+        list.add("Pepote");
+
+        list.pushAt(2, "New string");
+
+        for(String s: list){
+            System.out.println(s);
+        }
     }
 }

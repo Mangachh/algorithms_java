@@ -27,12 +27,12 @@ public class DynamicArray<T> implements ICollection<T>{
     }
 
     @Override
-    public void putAt(int index, final Object data){
+    public void putAt(int index, final T data){
         this.data[index] = data;
     }
 
     @Override
-    public boolean tryReplaceAt(int index, final Object data){
+    public boolean tryReplaceAt(int index, final T data){
         if (index < this.data.length){
             this.data[index] = data;
             return true;
@@ -41,10 +41,29 @@ public class DynamicArray<T> implements ICollection<T>{
         return false;
     }
 
-    public void pushAt(int index){
-        // pone en el index y empuja lo demás
-        // chequeamos si el último tiene valor, si es
-        // así entoces hacemos un resize
+    @Override
+    public void pushAt(int index, final T obj){
+        // if index is greater, do nothing
+        if(index >= this.data.length){
+            return;
+        }
+
+        // put in variable in case the resize is needed
+        int originalLength = this.data.length;
+
+        // check if the last has value
+        if(this.data[this.data.length - 1] == null ||
+            this.data.length + 1 >= this.data.length){
+            this.resize();
+        }
+
+        for(int i = originalLength; i > index; i--){
+            this.data[i] = this.data[i-1];
+        }
+
+        this.data[index] = obj;
+
+
     }
 
     public void resize(){
