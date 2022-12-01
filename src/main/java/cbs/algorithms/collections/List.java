@@ -1,5 +1,6 @@
 package cbs.algorithms.collections;
 
+
 public class List<T> extends DynamicArray<T>{
 
 
@@ -12,8 +13,24 @@ public class List<T> extends DynamicArray<T>{
     public List(int capacity){
         super(capacity);
     }
-    {
-        this.count = 0;
+
+    public List(final DynamicArray<T> array){
+        super.data = new Object[array.getCapacity()];
+        this.copyArray(array.data);
+    }
+
+    public List(final List<T> list){
+        super.data = new Object[list.count];
+        this.copyArray(list.data);
+    }
+
+
+    public void copyArray(final Object[] array){
+        for(int i = 0; i < array.length; i++){
+            super.data[i] = array[i];            
+        }
+
+        this.count = array.length;
     }
 
     public void add(final Object data){
@@ -47,8 +64,20 @@ public class List<T> extends DynamicArray<T>{
     }
 
     @Override
-    protected boolean hasNextO(int index){
+    public boolean hasNextO(int index){
         return index < count;
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public T[] toArray(Class<T> datatype){
+        
+        T[] obj = (T[])java.lang.reflect.Array.newInstance(datatype, this.count);
+        for(int i = 0; i < this.count; i++){
+            obj[i] = (T)super.data[i];
+        }
+
+        return obj;
     }
     
     

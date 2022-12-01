@@ -3,25 +3,18 @@ package cbs.algorithms;
 
 import cbs.algorithms.collections.*;
 
-/**
- * Hello world!
- *
- */
 public class App 
 {
     public static void main( String[] args )
     {
-        List<String> list = new List<>(100);
+        List<String> list = new List<String>(5);
         list.add("Hola");
         list.add("Adiós");
         list.add("Enga ya");
+        String[] array = list.toArray(String.class);
 
-        for(String s: list){
-            if(s != null){
-                System.out.println(s);
-            }else{
-                System.out.println("null");
-            }
+        for(String s : array){
+            System.out.println(s);
         }
         
     }

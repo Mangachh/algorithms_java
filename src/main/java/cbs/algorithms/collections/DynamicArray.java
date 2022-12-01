@@ -3,7 +3,7 @@ package cbs.algorithms.collections;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-public class DynamicArray<T> implements Iterable<T>{
+public class DynamicArray<T> implements ICollection<T>{
     
     protected Object[] data;
 
@@ -26,10 +26,12 @@ public class DynamicArray<T> implements Iterable<T>{
         return (T)this.data[index];
     }
 
-    public void replaceAt(int index, final Object data){
+    @Override
+    public void putAt(int index, final Object data){
         this.data[index] = data;
     }
 
+    @Override
     public boolean tryReplaceAt(int index, final Object data){
         if (index < this.data.length){
             this.data[index] = data;
@@ -37,6 +39,12 @@ public class DynamicArray<T> implements Iterable<T>{
         }
 
         return false;
+    }
+
+    public void pushAt(int index){
+        // pone en el index y empuja lo demás
+        // chequeamos si el último tiene valor, si es
+        // así entoces hacemos un resize
     }
 
     public void resize(){
@@ -76,10 +84,20 @@ public class DynamicArray<T> implements Iterable<T>{
         };
     }
 
-
-    protected boolean hasNextO(int index){
+    @Override
+    public boolean hasNextO(int index){
         return (index < data.length);
     }
 
+    @SuppressWarnings("unchecked")
+    @Override
+    public T[] toArray(Class<T> datatype){
+        
+        T[] obj = (T[])java.lang.reflect.Array.newInstance(datatype, this.data.length);
+        for(int i = 0; i < this.data.length; i++){
+            obj[i] = (T)this.data[i];
+        }
 
+        return obj;
+    }
 }
