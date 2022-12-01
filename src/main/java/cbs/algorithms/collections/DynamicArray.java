@@ -62,8 +62,11 @@ public class DynamicArray<T> implements ICollection<T>{
         }
 
         this.data[index] = obj;
+    }
 
-
+    @Override
+    public void removeAt(int index){
+        this.data[index] = null;
     }
 
     public void resize(){

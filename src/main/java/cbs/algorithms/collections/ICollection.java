@@ -8,4 +8,6 @@ public interface ICollection<T> extends Iterable<T> {
     boolean hasNextO(int index);
     T[] toArray(Class<T> datatype);
     void pushAt(int index, final T obj);
+    void removeAt(int index);
+    void remove(final T obj);
 }

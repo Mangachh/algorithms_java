@@ -32,9 +32,19 @@ public class App
         list.add("Pepote");
 
         list.pushAt(2, "New string");
-
+        System.out.println("Push AT!!!");
         for(String s: list){
             System.out.println(s);
         }
+        System.out.println("Count: " + list.getCount());
+
+        list.removeAt(1);
+        System.out.println("\nRemoved index 1");
+        for(String s: list){
+            System.out.println(s);
+        }
+        System.out.println("Count: " + list.getCount());
     }
+
+    
 }

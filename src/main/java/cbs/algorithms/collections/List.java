@@ -101,9 +101,17 @@ public class List<T> extends DynamicArray<T>{
 
         this.data[index] = obj;
         this.count++;
-
-
     }
-    
+
+
+    @Override
+    public void removeAt(int index){
+        for(int i = index; i < this.count - 1; i++){
+            super.data[i] = super.data[i +1];
+        }
+
+        super.data[this.count - 1] = null;
+        this.count--; 
+    }
     
 }
