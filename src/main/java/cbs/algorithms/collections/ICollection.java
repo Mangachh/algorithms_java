@@ -10,4 +10,6 @@ public interface ICollection<T> extends Iterable<T> {
     void pushAt(int index, final T obj);
     void removeAt(int index);
     void remove(final T obj);
+    void removeAll(final T obj);
+    void clear();
 }

@@ -69,6 +69,32 @@ public class DynamicArray<T> implements ICollection<T>{
         this.data[index] = null;
     }
 
+    @Override
+    public void remove(final T obj){
+        for(int i = 0; i < this.data.length; i++){
+            if(this.data[i].equals(obj)){
+                this.data[i] = null;
+                return;
+            }
+        }
+    }
+
+    @Override
+    public void removeAll(final T obj){
+        for(int i = 0; i < this.data.length; i++){
+            if(this.data[i].equals(obj)){
+                this.data[i] = null;
+            }
+        }
+    }
+
+    @Override
+    public void clear(){
+        for(int i = 0; i < this.data.length; i++){
+            this.data[i] = null;
+        }
+    }
+
     public void resize(){
         Object[] newO = new Object[this.data.length * RESIZE_MULT];
 

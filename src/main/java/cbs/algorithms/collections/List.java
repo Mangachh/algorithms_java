@@ -113,5 +113,39 @@ public class List<T> extends DynamicArray<T>{
         super.data[this.count - 1] = null;
         this.count--; 
     }
+
+    @Override
+    public void remove(final T obj){
+        for(int i = 0; i < this.count; i++){
+            if(super.data[i].equals(obj)){
+                this.removeAt(i);
+                return;
+            }
+        }
+    }
+
+    @Override
+    public void removeAll(final T obj){
+        for(int i = 0; i < this.count; i++){
+            if(super.data[i].equals(obj)){
+
+                // se puede optimizar.
+                // de esta manera recorremos y organizamos el array
+                // a cada encuentro y, dependiendo de las veces que salga
+                // reordenamos demasiado, aún así, si ponemos los indexs 
+                // en una lista y quitamos a partir de allí, quizás
+                // podamos hacerlo más rápido
+                this.removeAt(i);
+            }
+        }
+    }    
+
+    @Override
+    public void clear(){
+        for(int i = 0; i < this.count; i++){
+            super.data[i] = null;
+        }
+        count = 0;
+    }
     
 }

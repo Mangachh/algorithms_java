@@ -30,6 +30,7 @@ public class App
         list.add("Hola");
         list.add("Adiós");
         list.add("Pepote");
+        list.add("Hola");
 
         list.pushAt(2, "New string");
         System.out.println("Push AT!!!");
@@ -40,6 +41,26 @@ public class App
 
         list.removeAt(1);
         System.out.println("\nRemoved index 1");
+        for(String s: list){
+            System.out.println(s);
+        }
+        System.out.println("Count: " + list.getCount());
+
+        list.remove("Hola");
+        System.out.println("\nRemoved first <<Hola>>");
+        for(String s: list){
+            System.out.println(s);
+        }
+
+        list.removeAll("Hola");
+        System.out.println("\nRemoved all <<Hola>>");
+        for(String s: list){
+            System.out.println(s);
+        }
+        System.out.println("Count: " + list.getCount());
+
+        list.clear();
+        System.out.println("\nCleared the list");
         for(String s: list){
             System.out.println(s);
         }
