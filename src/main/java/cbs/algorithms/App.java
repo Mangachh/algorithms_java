@@ -8,7 +8,9 @@ public class App
     public static void main( String[] args )
     {
         //checkDynamicArray();
-        checkList();
+        //checkList();
+
+        checkSLinked();
         
     }
 
@@ -65,6 +67,19 @@ public class App
             System.out.println(s);
         }
         System.out.println("Count: " + list.getCount());
+    }
+
+
+    private static void checkSLinked(){
+        SLinkedList<String> list = new SLinkedList<>();
+        System.out.println(list.toString());
+        list.append("Uno");
+        list.append("Dos");
+        list.append("Tres");
+        list.append("Cuatro");
+
+        System.out.println(list.toString());
+        System.out.println(list.getCount());
     }
 
     
