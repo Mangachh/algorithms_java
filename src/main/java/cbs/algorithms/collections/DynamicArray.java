@@ -29,17 +29,7 @@ public class DynamicArray<T> implements ICollection<T>{
     @Override
     public void putAt(int index, final T data){
         this.data[index] = data;
-    }
-
-    @Override
-    public boolean tryReplaceAt(int index, final T data){
-        if (index < this.data.length){
-            this.data[index] = data;
-            return true;
-        }
-
-        return false;
-    }
+    }   
 
     @Override
     public void pushAt(int index, final T obj){

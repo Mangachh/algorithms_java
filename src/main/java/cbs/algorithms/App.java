@@ -94,6 +94,14 @@ public class App
         for(String s: list){
             System.out.println(s);
         }
+
+        list.putAt(2, "1");
+        System.out.println("Write 1 on index 2");
+        System.out.println(list);
+
+        list.pushAt(3, "3");
+        System.out.println("Push 3 on index 3");
+        System.out.println(list);
     }
 
     

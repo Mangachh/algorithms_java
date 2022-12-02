@@ -106,14 +106,32 @@ public class SLinkedList<T> implements ICollection<T>{
 
     @Override
     public void putAt(int index, final T obj) {
-        // TODO Auto-generated method stub
+        if(index >= this.count){
+            return;
+        }
+        SLinkedNode<T> newNode = new SLinkedNode<T>(obj);
+
+        if(index == 0){            
+            newNode.setNextNode(this.head.getNext());
+            this.head = newNode;
+            return;
+        }
+
+        SLinkedNode<T> current = this.head.getNext();
+        SLinkedNode<T> back = this.head;
+        for(int i = 1; i < this.count; i++){
+            if(i == index){
+                back.setNextNode(newNode);
+                newNode.setNextNode(current.getNext());
+                return;                
+            }
+
+            back = current;
+            current = current.getNext();
+        }
         
     }
-    @Override
-    public boolean tryReplaceAt(int index, final T obj) {
-        // TODO Auto-generated method stub
-        return false;
-    }
+    
     @Override
     public boolean hasNextO(int index) {
         return index < this.count;
@@ -125,7 +143,24 @@ public class SLinkedList<T> implements ICollection<T>{
     }
     @Override
     public void pushAt(int index, final T obj) {
-        // TODO Auto-generated method stub
+        if(index == 0){
+            this.prepending(obj);
+            return;
+        }
+        SLinkedNode<T> newNode = new SLinkedNode<T>(obj);
+        SLinkedNode<T> current = this.head.getNext();
+        SLinkedNode<T> back = this.head;
+        for(int i = 1; i < this.count; i++){
+            if(i == index){
+                newNode.setNextNode(current);
+                back.setNextNode(newNode);
+                count++;
+                return;
+            }
+
+            back = current;
+            current = current.getNext();
+        }
         
     }
     @Override
