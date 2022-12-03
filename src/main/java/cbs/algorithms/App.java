@@ -111,9 +111,13 @@ public class App
         list.append("Cero");
         list.pushAt(2, "Cero");
         System.out.println(list);
-        list.removeAll("Cero");
-        
+        list.removeAll("Cero");        
         System.out.println(list);
+
+        System.out.println("\nClear index 0");
+        list.removeAt(0);
+        System.out.println(list);
+        System.out.println(list.getCount());
 
         list.clear();
         System.out.println("\nclear list (oju, count = 2");

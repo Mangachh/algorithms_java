@@ -128,8 +128,7 @@ public class SLinkedList<T> implements ICollection<T>{
 
             back = current;
             current = current.getNext();
-        }
-        
+        }        
     }
     
     @Override
@@ -165,7 +164,30 @@ public class SLinkedList<T> implements ICollection<T>{
     }
     @Override
     public void removeAt(int index) {
-        // TODO Auto-generated method stub
+        if(this.head == null){
+            return;
+        }
+
+        if(index == 0){
+            this.head = this.head.getNext();
+            this.count--;
+            return;
+        }
+
+        SLinkedNode<T> current = this.head.getNext();
+        SLinkedNode<T> previous = this.head;
+
+        for(int i = 1; i < index; i++){
+            if(i == index){
+                previous.setNextNode(current.getNext());
+                current.setNextNode(null);
+                count--;
+                return;
+            }
+
+            previous = current;
+            current = current.getNext();
+        }
         
     }
     @Override
@@ -176,6 +198,7 @@ public class SLinkedList<T> implements ICollection<T>{
 
         if(obj.equals(this.head.getData())){
             this.head = this.head.getNext();
+            count--;
             return;
         }
 
@@ -185,6 +208,7 @@ public class SLinkedList<T> implements ICollection<T>{
         for(int i = 1; i < this.count; i++){
             if(current.getData().equals(obj)){
                 previous.setNextNode(current.getNext());
+                current.setNextNode(null);
                 count--;
                 return;
             }
@@ -202,6 +226,7 @@ public class SLinkedList<T> implements ICollection<T>{
 
         if(obj.equals(this.head.getData())){
             this.head = this.head.getNext();
+            count--;
             return;
         }
 
