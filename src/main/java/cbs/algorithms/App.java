@@ -96,12 +96,17 @@ public class App
         }
 
         list.putAt(2, "1");
-        System.out.println("Write 1 on index 2");
+        System.out.println("\nWrite 1 on index 2");
         System.out.println(list);
 
         list.pushAt(3, "3");
-        System.out.println("Push 3 on index 3");
+        System.out.println("\nPush 3 on index 3");
         System.out.println(list);
+
+        list.clear();
+        System.out.println("\nclear list (oju, count = 2");
+        System.out.println(list.getCount());
+        System.out.println(list.toString());
     }
 
     

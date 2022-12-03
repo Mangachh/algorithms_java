@@ -44,7 +44,7 @@ public class SLinkedList<T> implements ICollection<T>{
     @Override
     public String toString(){
         if(this.head == null){
-            return "";
+            return "[]";
         }
 
         StringBuilder builder = new StringBuilder();
@@ -175,13 +175,34 @@ public class SLinkedList<T> implements ICollection<T>{
     }
     @Override
     public void removeAll(Object obj) {
-        // TODO Auto-generated method stub
+        if(this.head == null){
+            return;
+        }
+
+        SLinkedNode<T> previous = this.head.getNext();
+        SLinkedNode<T> current = this.head;
+        for(int i = 1; i < this.count; i++){
+            
+        }
         
     }
     @Override
     public void clear() {
-        // TODO Auto-generated method stub
-        
+        if(this.head == null){
+            return;
+        }
+
+        SLinkedNode<T> previous = this.head;
+        SLinkedNode<T> current = this.head.getNext();
+        for(int i = 1; i < this.count; i++){
+            previous.setNextNode(null);
+            previous = current;
+            current = current.getNext();                
+        }
+
+        this.head = null;
+        this.tail = null;
+        this.count = 0;      
     }
 
 
