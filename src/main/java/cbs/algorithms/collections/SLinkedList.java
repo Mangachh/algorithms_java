@@ -44,7 +44,7 @@ public class SLinkedList<T> implements ICollection<T>{
     @Override
     public String toString(){
         if(this.head == null){
-            return "[]";
+            return String.format("%s%s", STRING_START, STRING_END);
         }
 
         StringBuilder builder = new StringBuilder();
@@ -135,10 +135,18 @@ public class SLinkedList<T> implements ICollection<T>{
     public boolean hasNextO(int index) {
         return index < this.count;
     }
+
+    @SuppressWarnings("unchecked")
     @Override
     public T[] toArray(Class<T> datatype) {
-        // TODO Auto-generated method stub
-        return null;
+        SLinkedNode<T> current = this.head;
+        T[] obj = (T[])java.lang.reflect.Array.newInstance(datatype, this.count);
+        for(int i = 0; i < this.count; i++){
+            obj[i] = (T)current.getData();
+            current = current.getNext();
+        }
+
+        return obj;
     }
     @Override
     public void pushAt(int index, final T obj) {
@@ -264,8 +272,5 @@ public class SLinkedList<T> implements ICollection<T>{
         this.tail = null;
         this.count = 0;      
     }
-
-
-
     
 }

@@ -119,6 +119,13 @@ public class App
         System.out.println(list);
         System.out.println(list.getCount());
 
+        System.out.println("\nTo Array");
+        String[] test = list.toArray(String.class);
+        System.out.println(test.getClass());
+        for(String t : test){
+            System.out.println(t);
+        }
+
         list.clear();
         System.out.println("\nclear list (oju, count = 2");
         System.out.println(list.getCount());
