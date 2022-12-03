@@ -103,6 +103,18 @@ public class App
         System.out.println("\nPush 3 on index 3");
         System.out.println(list);
 
+        list.remove("3");
+        System.out.println("\nRemove 3, no index");
+        System.out.println(list);
+
+        System.out.println("\nPut two new \"Cero\" and remove both");
+        list.append("Cero");
+        list.pushAt(2, "Cero");
+        System.out.println(list);
+        list.removeAll("Cero");
+        
+        System.out.println(list);
+
         list.clear();
         System.out.println("\nclear list (oju, count = 2");
         System.out.println(list.getCount());

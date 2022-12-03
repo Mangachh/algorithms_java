@@ -169,21 +169,56 @@ public class SLinkedList<T> implements ICollection<T>{
         
     }
     @Override
-    public void remove(Object obj) {
-        // TODO Auto-generated method stub
-        
-    }
-    @Override
-    public void removeAll(Object obj) {
+    public void remove(T obj) {
         if(this.head == null){
             return;
         }
 
-        SLinkedNode<T> previous = this.head.getNext();
-        SLinkedNode<T> current = this.head;
-        for(int i = 1; i < this.count; i++){
-            
+        if(obj.equals(this.head.getData())){
+            this.head = this.head.getNext();
+            return;
         }
+
+        SLinkedNode<T> current = this.head.getNext();
+        SLinkedNode<T> previous = this.head;
+
+        for(int i = 1; i < this.count; i++){
+            if(current.getData().equals(obj)){
+                previous.setNextNode(current.getNext());
+                count--;
+                return;
+            }
+
+            previous = current;
+            current = current.getNext();
+        }        
+    }
+
+    @Override
+    public void removeAll(T obj) {
+        if(this.head == null){
+            return;
+        }
+
+        if(obj.equals(this.head.getData())){
+            this.head = this.head.getNext();
+            return;
+        }
+
+        SLinkedNode<T> current = this.head.getNext();
+        SLinkedNode<T> previous = this.head;
+
+        for(int i = this.count - 1; i > 0; i--){
+            if(current.getData().equals(obj)){
+                previous.setNextNode(current.getNext());
+                count--;                
+                current = current.getNext();
+                continue;
+            }
+
+            previous = current;
+            current = current.getNext();
+        }    
         
     }
     @Override
