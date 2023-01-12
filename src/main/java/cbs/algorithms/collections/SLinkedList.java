@@ -26,10 +26,10 @@ public class SLinkedList<T> implements ICollection<T>, IIndexable<T>{
         this.count++;
     }
 
-    public void prepending(final T data){
+    public void insertHead(final T data){
         SLinkedNode<T> newHead = new SLinkedNode<T>(data);
-        newHead.insertAfter(this.head);
-        //newHead.setNextNode(head);
+        //newHead.insertAfter(this.head);
+        newHead.setNextNode(head);
         this.head = newHead;
 
         if(tail == null){
@@ -92,7 +92,7 @@ public class SLinkedList<T> implements ICollection<T>, IIndexable<T>{
 
     @Override
     public T getAt(int index) {
-        if(index > count){
+        if(index < 0 || index > count){
             return null;
         }
         
@@ -157,7 +157,7 @@ public class SLinkedList<T> implements ICollection<T>, IIndexable<T>{
     @Override
     public void pushAt(int index, final T obj) {
         if(index == 0){
-            this.prepending(obj);
+            this.insertHead(obj);
             return;
         }
         SLinkedNode<T> newNode = new SLinkedNode<T>(obj);
@@ -280,5 +280,10 @@ public class SLinkedList<T> implements ICollection<T>, IIndexable<T>{
         this.tail = null;
         this.count = 0;      
     }
+
+    public T getHead(){
+        return this.head.getData();
+    }
+
     
 }

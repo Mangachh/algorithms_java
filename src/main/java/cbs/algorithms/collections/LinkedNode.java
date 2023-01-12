@@ -52,7 +52,6 @@ public class LinkedNode<T>{
         newNode.next = this;
         newNode.previous = this.previous;
         this.previous = newNode;
-        //this.next = newNode; //???
     }
 
     /**

@@ -54,7 +54,6 @@ public class SLinkedNode<T> {
     /**
      * Set's the next node
      * @param node next node
-     * @deprecated
      */
     public void setNextNode(final SLinkedNode<T> node){
         this.next = node;
