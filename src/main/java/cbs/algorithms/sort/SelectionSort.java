@@ -14,12 +14,12 @@ public class SelectionSort {
      * 
      * Pseudo:
      * selectionSort(array, size):
-     * for unsortedIndex in range(size - 1):
-     * minimum = array[unsortedIndex]
-     * for (unsortedIndex + 1) in range(size):
-     * if element < currentMinimum:
-     * minimum = element
-     * swap minimum with unsortedIndex
+     *      for unsortedIndex in range(size - 1):
+     *          minimum = array[unsortedIndex]
+     *          for (unsortedIndex + 1) in range(size):
+     *              if element < currentMinimum:
+     *                  minimum = element
+     *      swap minimum with unsortedIndex
      * end selectionSort
      *
      * @param <T>  : class that extends Comparable
