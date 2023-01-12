@@ -30,8 +30,10 @@ public class LinkedList<T> implements ICollection<T>, IIndexable<T>{
     public void prepending(final T data){
         LinkedNode<T> newHead = new LinkedNode<T>(data);
         if(this.head != null){
+            this.head.insertBefore(newHead);
+            /*
             newHead.setNext(this.head);
-            this.head.setPrevious(newHead);
+            this.head.setPrevious(newHead);*/
         }
 
         this.head = newHead;

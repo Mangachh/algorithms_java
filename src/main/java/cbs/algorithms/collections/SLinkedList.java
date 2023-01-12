@@ -22,12 +22,14 @@ public class SLinkedList<T> implements ICollection<T>, IIndexable<T>{
             this.tail.insertAfter(data);
             this.tail = this.tail.getNext();
         }
+
         this.count++;
     }
 
     public void prepending(final T data){
         SLinkedNode<T> newHead = new SLinkedNode<T>(data);
-        newHead.setNextNode(head);
+        newHead.insertAfter(this.head);
+        //newHead.setNextNode(head);
         this.head = newHead;
 
         if(tail == null){
