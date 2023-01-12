@@ -1,0 +1,3 @@
+- there are several bugs along the classes
+- create tests to easily check them
+- refractor

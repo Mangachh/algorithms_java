@@ -2,6 +2,8 @@ package cbs.algorithms.collections;
 
 public interface ICollection<T> extends Iterable<T> {
     
+    // getAt, pushAt, putAt & removeAt -> diferent interface
+    // unordered collections like hash doesn't need them
     T getAt(int index);
     void putAt(int index, final T obj);
     boolean hasNextO(int index);
