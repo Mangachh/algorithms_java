@@ -15,7 +15,7 @@ public class SLinkedList<T> implements ICollection<T>{
 
 
     public void append(final T data){
-        if(head == null){
+        if(this.head == null){
             this.head = new SLinkedNode<T>(data);
             this.tail = this.head;
         }else{
@@ -112,23 +112,25 @@ public class SLinkedList<T> implements ICollection<T>{
         SLinkedNode<T> newNode = new SLinkedNode<T>(obj);
 
         if(index == 0){            
-            newNode.setNextNode(this.head.getNext());
+            try{
+                newNode.setNextNode(this.head.getNext());
+            }catch(NullPointerException e){
+
+            }
+            
             this.head = newNode;
             return;
         }
 
         SLinkedNode<T> current = this.head.getNext();
         SLinkedNode<T> back = this.head;
-        for(int i = 1; i < this.count; i++){
-            if(i == index){
-                back.setNextNode(newNode);
-                newNode.setNextNode(current.getNext());
-                return;                
-            }
-
+        for(int i = 1; i < index; i++){
             back = current;
             current = current.getNext();
-        }        
+        }       
+
+        back.setNextNode(newNode);
+        newNode.setNextNode(current.getNext()); 
     }
     
     @Override
@@ -148,6 +150,7 @@ public class SLinkedList<T> implements ICollection<T>{
 
         return obj;
     }
+    
     @Override
     public void pushAt(int index, final T obj) {
         if(index == 0){
@@ -157,17 +160,14 @@ public class SLinkedList<T> implements ICollection<T>{
         SLinkedNode<T> newNode = new SLinkedNode<T>(obj);
         SLinkedNode<T> current = this.head.getNext();
         SLinkedNode<T> back = this.head;
-        for(int i = 1; i < this.count; i++){
-            if(i == index){
-                newNode.setNextNode(current);
-                back.setNextNode(newNode);
-                count++;
-                return;
-            }
-
+        for(int i = 1; i < index; i++){
             back = current;
             current = current.getNext();
         }
+
+        newNode.setNextNode(current);
+        back.setNextNode(newNode);
+        count++;
         
     }
     @Override
@@ -218,6 +218,9 @@ public class SLinkedList<T> implements ICollection<T>{
                 previous.setNextNode(current.getNext());
                 current.setNextNode(null);
                 count--;
+                if(i == this.count -1){
+                    this.tail = previous;
+                }
                 return;
             }
 
