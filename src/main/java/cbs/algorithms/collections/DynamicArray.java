@@ -3,12 +3,16 @@ package cbs.algorithms.collections;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
+// TODO: Documentation
 public class DynamicArray<T> implements ICollection<T>{
     
     protected Object[] data;
 
     private static int DEFFAULT_CAPACITY = 10;
     private static int RESIZE_MULT= 2;
+
+    private static String STR_OPEN = "[";
+    private static String STR_CLOSE = "]";
     
     
     public DynamicArray(int capacity){
@@ -26,24 +30,36 @@ public class DynamicArray<T> implements ICollection<T>{
         return (T)this.data[index];
     }
 
+    public void removeNulls(){
+        List<Object> temp = new List<>(this.data.length);
+        for(int i = 0; i < this.data.length; i++){
+            if(this.data[i] != null){
+                temp.add(data[i]);
+                data[i] = null;
+            }
+        }
+
+        this.data = temp.toArray(Object.class);
+    }
+
+    // because is dynamic, if the index is bigger than
+    // the length, it resizes
+    // TODO: optimize array
     @Override
     public void putAt(int index, final T data){
+        if(index >= this.data.length){
+            this.resize();
+        }
+
         this.data[index] = data;
     }   
 
     @Override
     public void pushAt(int index, final T obj){
-        // if index is greater, do nothing
-        if(index >= this.data.length){
-            return;
-        }
+        int originalLength = this.data.length;        
 
-        // put in variable in case the resize is needed
-        int originalLength = this.data.length;
-
-        // check if the last has value
-        if(this.data[this.data.length - 1] == null ||
-            this.data.length + 1 >= this.data.length){
+        // 1 is the object that we push
+        if(this.data[originalLength -1] != null || index >= originalLength){
             this.resize();
         }
 
@@ -127,6 +143,12 @@ public class DynamicArray<T> implements ICollection<T>{
         return (index < data.length);
     }
 
+
+    @Override
+    public String toString(){
+        return "";
+    }
+
     @SuppressWarnings("unchecked")
     @Override
     public T[] toArray(Class<T> datatype){
@@ -137,5 +159,9 @@ public class DynamicArray<T> implements ICollection<T>{
         }
 
         return obj;
+    }
+
+    public int getDefaultCapacity(){
+        return DEFFAULT_CAPACITY;
     }
 }
