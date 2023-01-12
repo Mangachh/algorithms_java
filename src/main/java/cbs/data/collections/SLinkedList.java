@@ -282,7 +282,19 @@ public class SLinkedList<T> implements ICollection<T>, IIndexable<T>{
     }
 
     public T getHead(){
-        return this.head.getData();
+        try{
+            return this.head.getData();
+        }catch(NullPointerException e){
+            return null;
+        }        
+    }
+
+    public T getTail(){
+        try{
+            return this.head.getData();
+        }catch(NullPointerException e){
+            return null;
+        }
     }
 
     

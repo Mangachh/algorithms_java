@@ -107,20 +107,35 @@ public class SLinkedListTest {
         );
     }
 
+    @Test
+    void testGetCount() {
+        SLinkedList<String> test = this.newList();
+        assertEquals(COUNT, test.getCount());
+    }
+
     
     @Test
     void testClear() {
+        SLinkedList<String> test = this.newList();
+        assertEquals(COUNT, test.getCount());
+        test.clear();
+
+        assertEquals(test.getCount(), 0);
+        assertEquals(test.getHead(), null);
+        assertEquals(test.getTail(), null);
 
     }    
 
-    @Test
-    void testGetCount() {
-
-    }
-
+    
     @Test
     void testIterator() {
+        SLinkedList<String> test = new SLinkedList<>();
+        int counter = 0;
+        for(String s: test){
+            counter++;
+        }
 
+        assertEquals(test.getCount(), counter);
     }
 
     
