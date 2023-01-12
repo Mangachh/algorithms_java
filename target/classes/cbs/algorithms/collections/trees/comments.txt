@@ -1,1 +1,3 @@
-- create a different folder for the trees
+- Simple tree
+- Binary tree
+- Heap tree

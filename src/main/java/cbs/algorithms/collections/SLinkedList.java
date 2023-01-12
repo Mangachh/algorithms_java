@@ -3,7 +3,7 @@ package cbs.algorithms.collections;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-public class SLinkedList<T> implements ICollection<T>, IIndexable{
+public class SLinkedList<T> implements ICollection<T>, IIndexable<T>{
 
     private SLinkedNode<T> head;
     private SLinkedNode<T> tail;
@@ -149,9 +149,9 @@ public class SLinkedList<T> implements ICollection<T>, IIndexable{
         }
 
         return obj;
-    }
+    }    
     
-    
+
     @Override
     public void pushAt(int index, final T obj) {
         if(index == 0){
@@ -171,6 +171,8 @@ public class SLinkedList<T> implements ICollection<T>, IIndexable{
         count++;
         
     }
+
+
     @Override
     public void removeAt(int index) {
         if(this.head == null){
