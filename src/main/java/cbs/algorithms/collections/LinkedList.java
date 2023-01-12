@@ -3,11 +3,12 @@ package cbs.algorithms.collections;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-public class LinkedList<T> implements ICollection<T>{
+public class LinkedList<T> implements ICollection<T>, IIndexable<T>{
     
     private LinkedNode<T> head;
     private LinkedNode<T> tail;
     private int count = 0;
+    
 
     private static final String STRING_START = "[";
     private static final String STRING_END = "]";

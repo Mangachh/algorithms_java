@@ -95,30 +95,9 @@ public class App
             System.out.println(s);
         }
 
-        list.putAt(2, "1");
-        System.out.println("\nWrite 1 on index 2");
-        System.out.println(list);
-        System.out.println(list.getCount());
-
-        list.pushAt(3, "3");
-        System.out.println("\nPush 3 on index 3");
-        System.out.println(list);
-
         list.remove("3");
         System.out.println("\nRemove 3, no index");
-        System.out.println(list);
-
-        System.out.println("\nPut two new \"Cero\" and remove both");
-        list.append("Cero");
-        list.pushAt(2, "Cero");
-        System.out.println(list);
-        list.removeAll("Cero");        
-        System.out.println(list);
-
-        System.out.println("\nClear index 0");
-        list.removeAt(0);
-        System.out.println(list);
-        System.out.println(list.getCount());
+        System.out.println(list);        
 
         System.out.println("\nTo Array");
         String[] test = list.toArray(String.class);
