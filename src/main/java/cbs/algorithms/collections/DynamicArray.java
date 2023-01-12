@@ -8,14 +8,19 @@ public class DynamicArray<T> implements ICollection<T>{
     
     protected Object[] data;
 
-    private static int DEFFAULT_CAPACITY = 10;
-    private static int RESIZE_MULT= 2;
+    private final static int DEFFAULT_CAPACITY = 10;
+    private final static int RESIZE_MULT= 2;
 
-    private static String STR_OPEN = "[";
-    private static String STR_CLOSE = "]";
+    private final static String STR_OPEN = "[";
+    private final static String STR_CLOSE = "]";
+    private final static String STR_SEPARATOR = ", ";
     
     
     public DynamicArray(int capacity){
+        if(capacity <= 0){
+            capacity = DEFFAULT_CAPACITY;
+        }
+        
         this.data = new Object[capacity];
     }
 
@@ -26,7 +31,7 @@ public class DynamicArray<T> implements ICollection<T>{
     // get and put
 
     @SuppressWarnings("unchecked")
-    public T getAt(int index){        
+    public T getAt(int index){                
         return (T)this.data[index];
     }
 
@@ -48,7 +53,7 @@ public class DynamicArray<T> implements ICollection<T>{
     @Override
     public void putAt(int index, final T data){
         if(index >= this.data.length){
-            this.resize();
+            this.resize(index + 1);
         }
 
         this.data[index] = data;
@@ -56,6 +61,11 @@ public class DynamicArray<T> implements ICollection<T>{
 
     @Override
     public void pushAt(int index, final T obj){
+
+        if(index < 0){
+            return;
+        }
+
         int originalLength = this.data.length;        
 
         // 1 is the object that we push
@@ -72,6 +82,11 @@ public class DynamicArray<T> implements ICollection<T>{
 
     @Override
     public void removeAt(int index){
+
+        if(index < 0 || index >= this.data.length){
+            return;
+        }
+        
         this.data[index] = null;
     }
 
@@ -102,11 +117,28 @@ public class DynamicArray<T> implements ICollection<T>{
     }
 
     public void resize(){
-        Object[] newO = new Object[this.data.length * RESIZE_MULT];
+        this.resize(this.data.length * RESIZE_MULT);
+    }
 
-        for(int i = 0; i < this.data.length; i++){
+    public void resize(int capacity){
+
+        if(capacity <= 0 || capacity == this.data.length){
+            return;
+        }
+
+        Object[] newO = new Object[capacity];
+        int limit;
+        
+        if(capacity > this.data.length){
+            limit = this.data.length;
+        }else{
+            limit = capacity;
+        }
+
+        for(int i = 0; i < limit; i++){
             newO[i] = this.data[i];
         }
+        
 
         this.data = newO;
     }
@@ -146,7 +178,22 @@ public class DynamicArray<T> implements ICollection<T>{
 
     @Override
     public String toString(){
-        return "";
+        StringBuilder builder = new StringBuilder();
+        final String nullStr = "NULL";
+
+        builder.append(STR_OPEN);
+        for(int i = 0; i < this.data.length; i++){
+            if(this.data != null){
+                builder.append(this.data[i].toString());
+            }else{
+                builder.append(nullStr);
+            }
+            builder.append(STR_SEPARATOR);
+        }
+
+        builder.replace(builder.length() - STR_SEPARATOR.length(), builder.length(), STR_CLOSE);
+
+        return builder.toString();
     }
 
     @SuppressWarnings("unchecked")
@@ -161,7 +208,7 @@ public class DynamicArray<T> implements ICollection<T>{
         return obj;
     }
 
-    public int getDefaultCapacity(){
+    public static int getDefaultCapacity(){
         return DEFFAULT_CAPACITY;
     }
 }
