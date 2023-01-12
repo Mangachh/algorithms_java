@@ -1,7 +1,7 @@
 package cbs.algorithms;
 
 
-import cbs.algorithms.collections.*;
+import cbs.data.collections.*;
 
 public class App 
 {

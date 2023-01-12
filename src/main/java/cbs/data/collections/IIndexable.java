@@ -1,4 +1,4 @@
-package cbs.algorithms.collections;
+package cbs.data.collections;
 
 /**
  * An interface for the collections that 

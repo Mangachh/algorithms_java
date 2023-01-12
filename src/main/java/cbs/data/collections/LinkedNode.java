@@ -1,4 +1,4 @@
-package cbs.algorithms.collections;
+package cbs.data.collections;
 
 /**
  * Node for the {@link LinkedList}

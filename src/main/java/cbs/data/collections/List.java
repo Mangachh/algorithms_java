@@ -1,4 +1,4 @@
-package cbs.algorithms.collections;
+package cbs.data.collections;
 
 
 public class List<T> extends DynamicArray<T>{

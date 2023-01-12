@@ -1,4 +1,4 @@
-package cbs.algorithms.collections;
+package cbs.data.collections;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
