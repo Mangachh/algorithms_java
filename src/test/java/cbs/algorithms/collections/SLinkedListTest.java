@@ -1,5 +1,6 @@
 package cbs.algorithms.collections;
 
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.stream.Stream;
@@ -38,7 +39,7 @@ public class SLinkedListTest {
         test.append(DATA_5);
 
         return test;
-    }
+    }    
 
     public static String[] dataToArray(){
         return new String[] {DATA_0, DATA_1, DATA_2, DATA_3, DATA_4, DATA_5};
@@ -140,28 +141,118 @@ public class SLinkedListTest {
 
     
 
-    @Test
-    void testPushAt() {
+    @ParameterizedTest
+    @MethodSource("testPushAtArguments")
+    void testPushAt(int index, final String data, final String expected) {
+        SLinkedList<String> test = this.newList();
+        test.pushAt(index, data);
 
+        assertEquals(expected, test.getAt(index));
     }
 
-    @Test
-    void testPutAt() {
+    private static Stream<Arguments> testPushAtArguments(){
+        return Stream.of(
+            Arguments.of(1, DATA_NEW_1, DATA_NEW_1),
+            Arguments.of(3, DATA_NEW_3, DATA_NEW_3),
+            Arguments.of(0, DATA_NEW_0, DATA_NEW_0),
+            Arguments.of(COUNT + 5, "Pepote", null),
+            Arguments.of(-4, "Pepote", null)
+        );
+    }
+    
 
+    @ParameterizedTest
+    @MethodSource("testPutAtArguments")
+    void testPutAt(int index, final String data, final String expected) {
+        SLinkedList<String> test = this.newList();
+        test.pushAt(index, data);
+
+        assertEquals(expected, test.getAt(index));
     }
 
-    @Test
-    void testRemove() {
-
+    private static Stream<Arguments> testPutAtArguments(){
+        return Stream.of(
+            Arguments.of(1, DATA_1, DATA_1),
+            Arguments.of(0, DATA_0, DATA_0),
+            Arguments.of(-5, DATA_0, null),
+            Arguments.of(COUNT + 2, DATA_0, null)
+        );
     }
 
-    @Test
-    void testRemoveAll() {
+    public SLinkedList<String> removeList(){
+        SLinkedList<String> test = new SLinkedList<>();
+        test.append(DATA_0);
+        test.append(DATA_0);
+        test.append(DATA_1);
+        test.append(DATA_2);
+        test.append(DATA_1);
+        test.append(DATA_3);
 
+        return test;
     }
 
-    @Test
-    void testRemoveAt() {
+    @ParameterizedTest
+    @MethodSource("testRemoveArguments")
+    void testRemove(final String data, int expectedCount, int firstIndex) {
+        SLinkedList<String> test = this.newList();
+        test.remove(data);
 
+        assertEquals(expectedCount, test.getCount());
+        if(firstIndex >= 0 && firstIndex < COUNT){
+            assertNotEquals(data, test.getAt(firstIndex));            
+        }
+    }
+
+    private static Stream<Arguments> testRemoveArguments(){
+        return Stream.of(
+            Arguments.of(DATA_0, COUNT-1, 0),
+            Arguments.of(DATA_1, COUNT-1, 2),
+            Arguments.of(DATA_3, COUNT-1, 5),
+            Arguments.of(DATA_4, COUNT-1, 6)
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource("testRemoveAllArguments")
+    void testRemoveAll(final String data, int expectedCount, int firstIndex) {
+        SLinkedList<String> test = this.removeList();
+        test.removeAll(data);
+
+        assertEquals(expectedCount, test.getCount());
+        if(firstIndex >= 0 && firstIndex < COUNT){
+            assertNotEquals(data, test.getAt(firstIndex));            
+        }
+    }
+
+    private static Stream<Arguments> testRemoveAllArguments(){
+        return Stream.of(
+            Arguments.of(DATA_0, COUNT-2, 0),
+            Arguments.of(DATA_1, COUNT-2, 2),
+            Arguments.of(DATA_3, COUNT-1, 5),
+            Arguments.of(DATA_4, COUNT, 6)
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource("testRemoveAtArguments")
+    void testRemoveAt(int index, final String expected, int expectedCount) {
+        SLinkedList<String> test = this.newList();
+        test.removeAt(index);
+
+        if(expectedCount <= COUNT - 1){
+            assertEquals(expected, test.getAt(index));
+        }
+        assertEquals(expectedCount, test.getCount());
+        
+    }   
+
+    private static Stream<Arguments> testRemoveAtArguments(){
+        return Stream.of(
+            Arguments.of(0, DATA_1, COUNT-1),
+            Arguments.of(1, DATA_2, COUNT-1),
+            Arguments.of(3, DATA_4, COUNT-1),
+            Arguments.of(-5, DATA_4, COUNT),
+            Arguments.of(COUNT+7, DATA_2, COUNT)
+        );
     }
 }
