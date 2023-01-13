@@ -20,7 +20,7 @@ public class SLinkedListTest {
     private static final String DATA_2 = "2";
     private static final String DATA_3 = "3";
     private static final String DATA_4 = "4";
-    private static final String DATA_5 = "4";
+    private static final String DATA_5 = "5";
     private static final int COUNT = 6;
 
     private static final String DATA_NEW_0 = "new string 0";
@@ -28,6 +28,17 @@ public class SLinkedListTest {
     private static final String DATA_NEW_2 = "new string 2";
     private static final String DATA_NEW_3 = "new string 3";
 
+    private static void print(final String mess, final SLinkedList<?> list){
+        System.out.println(mess + ": " + list.toString());
+    }
+
+    private static void print(final String mess, final Object ress){
+        System.out.println(mess + ": " + ress.toString());
+    }
+
+    private static void printSep(){
+        System.out.println("----------------------");
+    }
 
     public SLinkedList<String> newList(){
         SLinkedList<String> test = new SLinkedList<>();
@@ -77,6 +88,7 @@ public class SLinkedListTest {
         String actual = test.getAt(index);
 
         assertEquals(expected, actual);
+        System.out.println(test.toString());
     }
 
     private static Stream<Arguments> testGetAtArguments(){
@@ -93,18 +105,20 @@ public class SLinkedListTest {
     void testInsertHead(final String data) {
         SLinkedList<String> test = this.newList();
         String previousHead = test.getHead();
-
+        System.out.println("Original: " + test.toString());
         test.insertHead(data);
+
 
         assertEquals(data, test.getHead());
         assertEquals(previousHead, test.getAt(1));
+        System.out.println(test.toString());
     }    
 
     private static Stream<Arguments> testInsertHeadArguments(){
         return Stream.of(
             Arguments.of((Object)null),
             Arguments.of(DATA_NEW_0),
-            Arguments.of(DATA_3)
+            Arguments.of(DATA_NEW_3)
         );
     }
 
@@ -165,15 +179,23 @@ public class SLinkedListTest {
     @MethodSource("testPutAtArguments")
     void testPutAt(int index, final String data, final String expected) {
         SLinkedList<String> test = this.newList();
-        test.pushAt(index, data);
+        print("-----", "-----");
+        print("Original", test);
+        test.putAt(index, data);
 
         assertEquals(expected, test.getAt(index));
+        print("Done", test);
+        print("tail", test.getTail());
+        
     }
+
+    
 
     private static Stream<Arguments> testPutAtArguments(){
         return Stream.of(
-            Arguments.of(1, DATA_1, DATA_1),
-            Arguments.of(0, DATA_0, DATA_0),
+            Arguments.of(1, DATA_NEW_1, DATA_NEW_1),
+            Arguments.of(0, DATA_NEW_0, DATA_NEW_0),
+            Arguments.of(COUNT-1, DATA_NEW_2, DATA_NEW_2),
             Arguments.of(-5, DATA_0, null),
             Arguments.of(COUNT + 2, DATA_0, null)
         );
@@ -195,12 +217,16 @@ public class SLinkedListTest {
     @MethodSource("testRemoveArguments")
     void testRemove(final String data, int expectedCount, int firstIndex) {
         SLinkedList<String> test = this.newList();
+        print("-----------", "");
+        print("Original", test);
         test.remove(data);
 
         assertEquals(expectedCount, test.getCount());
         if(firstIndex >= 0 && firstIndex < COUNT){
             assertNotEquals(data, test.getAt(firstIndex));            
         }
+        print("Done", test);
+        print("tail", test.getTail());
     }
 
     private static Stream<Arguments> testRemoveArguments(){
@@ -208,7 +234,8 @@ public class SLinkedListTest {
             Arguments.of(DATA_0, COUNT-1, 0),
             Arguments.of(DATA_1, COUNT-1, 2),
             Arguments.of(DATA_3, COUNT-1, 5),
-            Arguments.of(DATA_4, COUNT-1, 6)
+            Arguments.of(DATA_4, COUNT-1, 6),
+            Arguments.of(DATA_5, COUNT-1, COUNT-1)
         );
     }
 
@@ -216,12 +243,18 @@ public class SLinkedListTest {
     @MethodSource("testRemoveAllArguments")
     void testRemoveAll(final String data, int expectedCount, int firstIndex) {
         SLinkedList<String> test = this.removeList();
+        printSep();
+        print("Original", test);
         test.removeAll(data);
 
         assertEquals(expectedCount, test.getCount());
         if(firstIndex >= 0 && firstIndex < COUNT){
             assertNotEquals(data, test.getAt(firstIndex));            
         }
+
+        print("Done", test);
+        print("Head", test.getHead());
+        print("Tail", test.getTail());
     }
 
     private static Stream<Arguments> testRemoveAllArguments(){

@@ -3,16 +3,45 @@ package cbs.data.collections;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
+/**
+ * An unidirectional LinkedList
+ */
 public class SLinkedList<T> implements ICollection<T>, IIndexable<T> {
 
+    /**
+     * Head node of the list
+     */
     private SLinkedNode<T> head;
+
+    /**
+     * Tail node of the list, to use in method {@link #append}
+     */
     private SLinkedNode<T> tail;
+
+    /**
+     * Count
+     */
     private int count = 0;
 
+    /**
+     * Start string for {@link #toString}
+     */
     private static final String STRING_START = "[";
+
+    /**
+     * End string for {@link #toString}
+     */
     private static final String STRING_END = "]";
+
+    /**
+     * Separator for the element to {@link #toString}
+     */
     private static final String ELEMENT_SEPARATOR = ", ";
 
+    /**
+     * Appends and item to the tail of the list
+     * @param data data to append
+     */
     public void append(final T data) {
         if (this.head == null) {
             this.head = new SLinkedNode<T>(data);
@@ -24,7 +53,16 @@ public class SLinkedList<T> implements ICollection<T>, IIndexable<T> {
 
         this.count++;
     }
-
+    
+    /**
+     * Inserts an item directly to the head to the head
+     * consider {1,2,3}
+     * insertHead(0)
+     * result {0,1,2,3}
+     * 
+     * Similar to {@link #pushAt(int, Object)} but only works with the head
+     * @param data data to insert
+     */
     public void insertHead(final T data) {
         SLinkedNode<T> newHead = new SLinkedNode<T>(data);
         // newHead.insertAfter(this.head);
@@ -38,6 +76,10 @@ public class SLinkedList<T> implements ICollection<T>, IIndexable<T> {
         count++;
     }
 
+    /**
+     * Gets the count of the items in the list
+     * @return items
+     */
     public int getCount() {
         return this.count;
     }
@@ -54,7 +96,12 @@ public class SLinkedList<T> implements ICollection<T>, IIndexable<T> {
 
         SLinkedNode<T> temp = head;
         for (int i = 0; i < this.count; i++) {
-            builder.append(temp.getData().toString());
+            try{
+                builder.append(temp.getData().toString());
+            }catch(NullPointerException e){
+                builder.append("NULL");
+            }
+            
             builder.append(ELEMENT_SEPARATOR);
             temp = temp.getNext();
         }
@@ -88,6 +135,11 @@ public class SLinkedList<T> implements ICollection<T>, IIndexable<T> {
         };
     }
 
+    /**
+     * Gets an item based on its index.
+     * 
+     * @param index index to look for
+     */
     @Override
     public T getAt(int index) {
         if (index < 0 || index >= count || index < 0) {
@@ -102,22 +154,32 @@ public class SLinkedList<T> implements ICollection<T>, IIndexable<T> {
         return temp.getData();
     }
 
+    /**
+     * Puts an element in the correspondent index if it exists,
+     * replacing the current one.
+     * 
+     * If the index is longer does nothing.
+     * 
+     * @param index index to put the item
+     * @param obj item
+     */
     @Override
     public void putAt(int index, final T obj) {
-        if (index >= this.count) {
+        if (index < 0 || index >= this.count) {
             return;
         }
         SLinkedNode<T> newNode = new SLinkedNode<T>(obj);
 
         if (index == 0) {
-            try {
+            if(this.head != null){
                 newNode.setNextNode(this.head.getNext());
-            } catch (NullPointerException e) {
-
+                tail = newNode;
             }
 
             this.head = newNode;
             return;
+        }else if (index == this.count - 1){
+            tail = newNode;
         }
 
         SLinkedNode<T> current = this.head.getNext();
@@ -224,14 +286,15 @@ public class SLinkedList<T> implements ICollection<T>, IIndexable<T> {
                 previous.setNextNode(current.getNext());
                 current.setNextNode(null);
                 count--;
-                if (i == this.count - 1) {
+
+                if (i == this.count) {
                     this.tail = previous;
                 }
                 return;
             }
 
             previous = current;
-            current = current.getNext();
+            current = current.getNext();            
         }
     }
 
@@ -241,19 +304,14 @@ public class SLinkedList<T> implements ICollection<T>, IIndexable<T> {
             return;
         }
 
-        /*
-         * if(obj.equals(this.head.getData())){
-         * this.head = this.head.getNext();
-         * count--;
-         * }
-         */
-
         SLinkedNode<T> current = this.head;
         SLinkedNode<T> previous = null;
 
         for (int i = this.count - 1; i >= 0; i--) {
             if (current.getData().equals(obj)) {
                 try {
+                    // if previous is null, then the node is the head,
+                    // so the next one will be the new head
                     previous.setNextNode(current.getNext());
                 } catch (NullPointerException e) {
                     this.head = current.getNext();
@@ -262,27 +320,16 @@ public class SLinkedList<T> implements ICollection<T>, IIndexable<T> {
                     current.setNextNode(null);
                     current = temp;
                     count--;
-                    //continue;
+
+                    if(i == 0){
+                        tail = previous;
+                    }
                 } 
                 continue;
             }
             previous = current;
             current = current.getNext();
         }
-
-        /*
-         * for(int i = this.count - 1; i > 0; i--){
-         * if(current.getData().equals(obj)){
-         * previous.setNextNode(current.getNext());
-         * count--;
-         * current = current.getNext();
-         * continue;
-         * }
-         * 
-         * 
-         * }
-         */
-
     }
 
     @Override
@@ -314,7 +361,7 @@ public class SLinkedList<T> implements ICollection<T>, IIndexable<T> {
 
     public T getTail() {
         try {
-            return this.head.getData();
+            return this.tail.getData();
         } catch (NullPointerException e) {
             return null;
         }

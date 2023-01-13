@@ -22,8 +22,8 @@ public class SLinkedNode<T> {
      */
     public SLinkedNode(final T data){
         this.data = data;
-    }
-
+    }    
+    
     /**
      * Returns the next node (child node)
      * @return next node, null if not exists
