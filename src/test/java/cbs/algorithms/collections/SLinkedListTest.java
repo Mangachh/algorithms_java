@@ -270,12 +270,18 @@ public class SLinkedListTest {
     @MethodSource("testRemoveAtArguments")
     void testRemoveAt(int index, final String expected, int expectedCount) {
         SLinkedList<String> test = this.newList();
+        printSep();
+        print("Original", test);
         test.removeAt(index);
 
         if(expectedCount <= COUNT - 1){
             assertEquals(expected, test.getAt(index));
         }
         assertEquals(expectedCount, test.getCount());
+
+        print("Done", test);
+        print("Head", test.getHead());
+        print("Tail", test.getTail());
         
     }   
 
@@ -284,6 +290,7 @@ public class SLinkedListTest {
             Arguments.of(0, DATA_1, COUNT-1),
             Arguments.of(1, DATA_2, COUNT-1),
             Arguments.of(3, DATA_4, COUNT-1),
+            Arguments.of(COUNT-1, null, COUNT-1),
             Arguments.of(-5, DATA_4, COUNT),
             Arguments.of(COUNT+7, DATA_2, COUNT)
         );

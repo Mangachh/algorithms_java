@@ -40,6 +40,7 @@ public class SLinkedList<T> implements ICollection<T>, IIndexable<T> {
 
     /**
      * Appends and item to the tail of the list
+     * 
      * @param data data to append
      */
     public void append(final T data) {
@@ -53,7 +54,7 @@ public class SLinkedList<T> implements ICollection<T>, IIndexable<T> {
 
         this.count++;
     }
-    
+
     /**
      * Inserts an item directly to the head to the head
      * consider {1,2,3}
@@ -61,6 +62,7 @@ public class SLinkedList<T> implements ICollection<T>, IIndexable<T> {
      * result {0,1,2,3}
      * 
      * Similar to {@link #pushAt(int, Object)} but only works with the head
+     * 
      * @param data data to insert
      */
     public void insertHead(final T data) {
@@ -78,6 +80,7 @@ public class SLinkedList<T> implements ICollection<T>, IIndexable<T> {
 
     /**
      * Gets the count of the items in the list
+     * 
      * @return items
      */
     public int getCount() {
@@ -96,12 +99,12 @@ public class SLinkedList<T> implements ICollection<T>, IIndexable<T> {
 
         SLinkedNode<T> temp = head;
         for (int i = 0; i < this.count; i++) {
-            try{
+            try {
                 builder.append(temp.getData().toString());
-            }catch(NullPointerException e){
+            } catch (NullPointerException e) {
                 builder.append("NULL");
             }
-            
+
             builder.append(ELEMENT_SEPARATOR);
             temp = temp.getNext();
         }
@@ -161,7 +164,7 @@ public class SLinkedList<T> implements ICollection<T>, IIndexable<T> {
      * If the index is longer does nothing.
      * 
      * @param index index to put the item
-     * @param obj item
+     * @param obj   item
      */
     @Override
     public void putAt(int index, final T obj) {
@@ -171,14 +174,14 @@ public class SLinkedList<T> implements ICollection<T>, IIndexable<T> {
         SLinkedNode<T> newNode = new SLinkedNode<T>(obj);
 
         if (index == 0) {
-            if(this.head != null){
+            if (this.head != null) {
                 newNode.setNextNode(this.head.getNext());
                 tail = newNode;
             }
 
             this.head = newNode;
             return;
-        }else if (index == this.count - 1){
+        } else if (index == this.count - 1) {
             tail = newNode;
         }
 
@@ -198,6 +201,11 @@ public class SLinkedList<T> implements ICollection<T>, IIndexable<T> {
         return index < this.count;
     }
 
+    /**
+     * Converts the list into a java array
+     * 
+     * @param array class
+     */
     @SuppressWarnings("unchecked")
     @Override
     public T[] toArray(Class<T> datatype) {
@@ -211,6 +219,14 @@ public class SLinkedList<T> implements ICollection<T>, IIndexable<T> {
         return obj;
     }
 
+    /**
+     * pushes an item into the desired index moving all
+     * the items one position at right.
+     * This method doesn't replaces an item
+     * 
+     * @param index index to push to
+     * @param obj object to push
+     */
     @Override
     public void pushAt(int index, final T obj) {
         if (index < 0 || index >= this.count) {
@@ -234,6 +250,11 @@ public class SLinkedList<T> implements ICollection<T>, IIndexable<T> {
 
     }
 
+    /**
+     * Removes the object at that index, if exists
+     * 
+     * @param index index 
+     */
     @Override
     public void removeAt(int index) {
         if (this.head == null || index >= count || index < 0) {
@@ -254,18 +275,21 @@ public class SLinkedList<T> implements ICollection<T>, IIndexable<T> {
             current = current.getNext();
         }
 
-        try {
-            previous.setNextNode(current.getNext());
+        previous.setNextNode(current.getNext());
+        current.setNextNode(null);
+        this.count--;
 
-        } catch (NullPointerException e) {
-
-        } finally {
-            current.setNextNode(null);
-            this.count--;
+        if (index == this.count) {
+            this.tail = previous;
         }
-
     }
 
+    
+    /**
+     * Removes the first coincidential object
+     * 
+     * @param obj object
+     */
     @Override
     public void remove(T obj) {
         if (this.head == null) {
@@ -294,10 +318,16 @@ public class SLinkedList<T> implements ICollection<T>, IIndexable<T> {
             }
 
             previous = current;
-            current = current.getNext();            
+            current = current.getNext();
         }
     }
 
+
+    /**
+     * Removes all the concordant objects
+     * 
+     * @param obj
+     */
     @Override
     public void removeAll(T obj) {
         if (this.head == null) {
@@ -321,10 +351,10 @@ public class SLinkedList<T> implements ICollection<T>, IIndexable<T> {
                     current = temp;
                     count--;
 
-                    if(i == 0){
+                    if (i == 0) {
                         tail = previous;
                     }
-                } 
+                }
                 continue;
             }
             previous = current;
@@ -332,6 +362,9 @@ public class SLinkedList<T> implements ICollection<T>, IIndexable<T> {
         }
     }
 
+    /**
+     * Clears the list
+     */
     @Override
     public void clear() {
         if (this.head == null) {
@@ -351,6 +384,10 @@ public class SLinkedList<T> implements ICollection<T>, IIndexable<T> {
         this.count = 0;
     }
 
+    /**
+     * Returns the head, null if there's none
+     * @return
+     */
     public T getHead() {
         try {
             return this.head.getData();
@@ -359,6 +396,10 @@ public class SLinkedList<T> implements ICollection<T>, IIndexable<T> {
         }
     }
 
+    /**
+     * Returns the last item of the list, null if none
+     * @return
+     */
     public T getTail() {
         try {
             return this.tail.getData();
