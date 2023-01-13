@@ -1,4 +1,4 @@
-package cbs.algorithms.collections;
+package cbs.data.collections;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
