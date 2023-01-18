@@ -25,7 +25,7 @@ public class List<T> extends DynamicArray<T>{
     }
 
 
-    public void copyArray(final Object[] array){
+    private void copyArray(final Object[] array){
         for(int i = 0; i < array.length; i++){
             super.data[i] = array[i];            
         }
@@ -39,9 +39,7 @@ public class List<T> extends DynamicArray<T>{
         }
 
         super.data[this.count] = data;
-        this.count++;
-
-        
+        this.count++;        
     }
 
     public List<T> getReversedList(){
@@ -82,8 +80,8 @@ public class List<T> extends DynamicArray<T>{
 
     @Override
     public void pushAt(int index, final T obj){
-        // if index is greater, do nothing
-        if(index >= this.count){
+        // if index is greater or < 0, do nothing
+        if(index >= this.count || index < 0){
             return;
         }
 

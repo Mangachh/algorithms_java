@@ -49,9 +49,18 @@ public class LinkedNode<T>{
      * @param newNode node to attach to previous
      */
     public void insertBefore(final LinkedNode<T> newNode){
-        newNode.next = this;
-        newNode.previous = this.previous;
-        this.previous = newNode;
+        try{            
+            newNode.setPrevious(this.previous);
+            this.previous.setNext(this);
+            
+        }catch(NullPointerException e){
+            
+        }finally{
+            newNode.next = this;
+            this.previous = newNode;
+        }      
+                
+        
     }
 
     /**
@@ -70,9 +79,17 @@ public class LinkedNode<T>{
      * @param newNode node to attach to previous
      */
     public void insertAfter(final LinkedNode<T> newNode){
-        newNode.next = this.next;
-        newNode.previous = this;
-        this.next = newNode;        
+
+
+        try{
+            newNode.setNext(this.next);
+            this.next.setPrevious(newNode);
+        }catch(NullPointerException e){
+
+        }finally{
+            this.setNext(newNode);
+            newNode.setPrevious(this);
+        }  
     }
 
     /**
@@ -115,11 +132,9 @@ public class LinkedNode<T>{
      * to this node. 
      * TODO: with insertAfter-insertBefore methods don't think i need this
      * @param previous
-     * @deprecated
      */
     public void setPrevious(LinkedNode<T> previous) {
         this.previous = previous;
-        previous.setNext(this);
     }
 
     /**
@@ -131,7 +146,6 @@ public class LinkedNode<T>{
     }
 
     /**
-     * @deprecated
      * @param next
      */
     public void setNext(LinkedNode<T> next) {

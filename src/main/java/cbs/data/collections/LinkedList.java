@@ -13,6 +13,7 @@ public class LinkedList<T> implements ICollection<T>, IIndexable<T>{
     private static final String STRING_START = "[";
     private static final String STRING_END = "]";
     private static final String ELEMENT_SEPARATOR = ", ";
+    private static final String STRING_NULL = "null";
 
     
     public void append(final T data){
@@ -61,7 +62,12 @@ public class LinkedList<T> implements ICollection<T>, IIndexable<T>{
         
         LinkedNode<T> temp = this.head;
         for(int i = 0; i < this.count; i++){
-            builder.append(temp.getData().toString());
+            try{
+                builder.append(temp.getData().toString());
+            }catch(NullPointerException e){
+                builder.append(STRING_NULL);
+            }
+            
             builder.append(ELEMENT_SEPARATOR);
             temp = temp.getNext();
         }
@@ -115,7 +121,7 @@ public class LinkedList<T> implements ICollection<T>, IIndexable<T>{
 
     @Override
     public T getAt(int index) {
-        if(index > count){
+        if(index >= count || index < 0){
             return null;
         }
 
@@ -148,35 +154,46 @@ public class LinkedList<T> implements ICollection<T>, IIndexable<T>{
     }
     @Override
     public void putAt(int index, final T obj) {
-        if(index >= this.count){
+        if(index >= this.count || index < 0){
             return;
         }
 
         LinkedNode<T> newNode = new LinkedNode<>(obj);
+        LinkedNode<T> current = this.getNodeAt(index);
         if(index == 0){
-            newNode.setNext(this.head);           
-
-            try{
-                this.head.setPrevious(newNode);
-            }catch(NullPointerException e){
-
-            }
-
             this.head = newNode;
-            return;            
         }
 
-        LinkedNode<T> current = this.getNodeAt(index);
+        if(index == count - 1){
+            this.tail = newNode;
+        }
+                
+        try{
+            current.getPrevious().insertAfter(newNode);
+        }catch(NullPointerException e){
 
-        newNode.setNext(current.getNext());
-        newNode.getNext().setPrevious(newNode);
-        newNode.setPrevious(current.getPrevious());
-        newNode.getPrevious().setNext(newNode);        
+        }
+        
+        try{
+            current.getNext().insertBefore(newNode);
+        }catch(NullPointerException e){}
+                
+        
+        
+        //newNode.insertAfter(current.getNext());
+        //newNode.insertBefore(current.getPrevious());
+
+        current.setNext(null);
+        current.setPrevious(null);
     }
 
     
     @Override
     public void pushAt(int index, T obj) {
+        if(index >= this.count || index < 0){
+            return;
+        }
+
         if(index == 0){
             this.prepending(obj);
             return;
@@ -184,23 +201,37 @@ public class LinkedList<T> implements ICollection<T>, IIndexable<T>{
 
         LinkedNode<T> current = this.getNodeAt(index);
         LinkedNode<T> newNode = new LinkedNode<>(obj);
-        LinkedNode<T> previoys = current.getPrevious();
-        previoys.setNext(newNode);
-        //current.getPrevious().setNext(newNode);
-        newNode.setPrevious(current.getPrevious());
-        current.setPrevious(newNode);
-        newNode.setNext(current);
-        
+
+        current.getPrevious().insertAfter(newNode);
+        current.insertBefore(newNode);       
         this.count++;     
     }
 
     @Override
     public void removeAt(int index) {
-        if(index >= this.count){
+        if(index >= this.count || index < 0){
             return;
-        }
+        }        
 
         LinkedNode<T> current = this.getNodeAt(index);
+
+        if(index == 0){
+            try{
+                this.head = current.getNext();
+            }catch(NullPointerException e){
+
+            }
+            
+        }
+
+        if(index == this.count - 1){
+            try{
+                this.tail = current.getPrevious();
+            }catch(NullPointerException e){
+
+            }
+            
+        }
         this.removeNode(current);
         
     }
@@ -216,7 +247,9 @@ public class LinkedList<T> implements ICollection<T>, IIndexable<T>{
 
         try{
             node.getNext().setPrevious(node.getPrevious());
-        }catch(NullPointerException e){}
+        }catch(NullPointerException e){
+
+        }
 
         this.count--;
     }
@@ -257,12 +290,39 @@ public class LinkedList<T> implements ICollection<T>, IIndexable<T>{
         }
         
         LinkedNode<T> current = this.head;
+        int target = this.count;
+        for(int i = 0; i < target; i++){
+            if(current.getData().equals(obj)){
+                if(current == this.head){
+                    try{
+                        this.head = current.getNext();
+                    }catch (NullPointerException e){
+                        this.head = null;
+                    }
+                    
+                }
+
+                if(current == this.tail){
+                    try{
+                        this.tail = current.getPrevious();
+                    }catch(NullPointerException e){
+                        this.tail = null;
+                    }
+                }
+
+                this.removeNode(current);
+                //count--;                
+            }
+
+            current = current.getNext();
+        }
+
+        /* 
         if(this.head.getData().equals(obj)){
             this.head = this.head.getNext();
             count--;
         }
 
-        // al revés, tio!
         current = this.tail;
         for(int i = this.count - 1; i > 0; i--){
             if(current.getData().equals(obj)){
@@ -275,14 +335,53 @@ public class LinkedList<T> implements ICollection<T>, IIndexable<T>{
             }
 
             current = current.getPrevious();
-        }    
+        }    */
         
     }
 
+    public void insertHead(final T data){
+        LinkedNode n = new LinkedNode<T>(data);
+        head.insertAfter(n);
+        n.setNext(head);
+        this.head = n;
+
+    }
+
+
     @Override
     public void clear() {
-        // TODO Auto-generated method stub
         
+        if(head != null){
+            LinkedNode<T> current = this.head.getNext();
+            LinkedNode<T> previous = this.head;
+
+            for(int i = 0; i < this.count-2; i++){                
+                current.setPrevious(null);
+                previous.setNext(null);
+                current = current.getNext();                
+            }
+
+            count = 0;
+            this.head = null;
+            this.tail = null;
+        }
+        
+    }
+
+    public T getHead(){
+        try{
+            return head.getData();
+        }catch(NullPointerException e){
+            return null;
+        }
+    }
+
+    public T getTail(){
+        try{
+            return this.tail.getData();
+        }catch(NullPointerException e){
+            return null;
+        }
     }
     
 }
