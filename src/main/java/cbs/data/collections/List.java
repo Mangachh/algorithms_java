@@ -80,24 +80,7 @@ public class List<T> extends DynamicArray<T>{
 
     @Override
     public void pushAt(int index, final T obj){
-        // if index is greater or < 0, do nothing
-        if(index >= this.count || index < 0){
-            return;
-        }
-
-        // put in variable in case the resize is needed
-        int originalCount = this.count;
-
-        // check if the last has value
-        if(this.count + 1 >= this.data.length){
-            this.resize();
-        }
-
-        for(int i = originalCount; i > index; i--){
-            this.data[i] = this.data[i-1];
-        }
-
-        this.data[index] = obj;
+        super.pushAt(index, obj);        
         this.count++;
     }
 
@@ -111,17 +94,7 @@ public class List<T> extends DynamicArray<T>{
         super.data[this.count - 1] = null;
         this.count--; 
     }
-
-    @Override
-    public void remove(final T obj){
-        for(int i = 0; i < this.count; i++){
-            if(super.data[i].equals(obj)){
-                this.removeAt(i);
-                return;
-            }
-        }
-    }
-
+  
     @Override
     public void removeAll(final T obj){
         for(int i = 0; i < this.count; i++){
