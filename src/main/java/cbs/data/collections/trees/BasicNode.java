@@ -78,6 +78,13 @@ public class BasicNode<T> {
         }
     }
 
+    public void postOrder(Consumer<BasicNode<T>> func){        
+        for(int i = 0; i < this.children.size(); i++){
+            this.children.get(i).preOrder(func);
+        }
+        func.accept(this);
+    }
+
     public BasicNode<T> getNodeByData(final T data){
         if(this.getData().equals(data)){
             return this;

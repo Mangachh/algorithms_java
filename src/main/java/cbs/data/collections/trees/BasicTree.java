@@ -27,6 +27,10 @@ public class BasicTree<T> {
         this.root.preOrder(func);
     }
 
+    public void postOrder(Consumer<BasicNode<T>> func){
+        this.root.postOrder(func);
+    }
+
     public BasicNode<T> getNodeByData(final T data){
         return root.getNodeByData(data);
     }
