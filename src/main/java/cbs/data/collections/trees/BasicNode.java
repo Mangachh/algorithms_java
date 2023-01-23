@@ -44,10 +44,14 @@ public class BasicNode<T> {
         }
     }
 
+    // nullify everything
     public void destroy(){
-        this.children.clear();
+        for(int i = 0; i < this.children.size(); i++){
+            this.children.get(i).destroy();
+        }
         this.parent = null;
         this.data = null;
+        this.children.clear();
     }
 
     public T getData(){
