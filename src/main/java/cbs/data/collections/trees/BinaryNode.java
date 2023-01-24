@@ -1,8 +1,8 @@
 package cbs.data.collections.trees;
 
-import java.time.chrono.ThaiBuddhistDate;
+import java.util.function.Consumer;
 
-public class BinaryNode<T> {
+public class BinaryNode<T>{
     private T data;
 
     private BinaryNode<T> parent;
@@ -25,6 +25,42 @@ public class BinaryNode<T> {
         }
 
         return count;
+    }
+
+    public void preOrder(Consumer<BinaryNode<T>> func){
+        func.accept(this);
+
+        if(this.left != null){
+            this.left.preOrder(func);
+        }
+
+        if(this.rigth != null){
+            this.rigth.preOrder(func);
+        }
+    }
+
+    public void postOrder(Consumer<BinaryNode<T>> func){
+        
+        if(this.left != null){
+            this.left.postOrder(func);
+        }
+
+        if(this.rigth != null){
+            this.rigth.postOrder(func);
+        }
+        func.accept(this);
+    }
+
+    public void inOrder(Consumer<BinaryNode<T>> func){
+        if(this.left != null){
+            this.left.inOrder(func);
+        }
+
+        func.accept(this);
+
+        if(this.rigth != null){
+            this.rigth.inOrder(func);
+        }        
     }
 
     public void setData(T data) {

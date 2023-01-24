@@ -2,7 +2,6 @@ package cbs.data.collections.trees;
 
 import java.util.ArrayList;
 import java.util.function.Consumer;
-import java.util.function.Function;
 
 public class BasicNode<T> {
 
@@ -84,7 +83,7 @@ public class BasicNode<T> {
 
     public void postOrder(Consumer<BasicNode<T>> func){        
         for(int i = 0; i < this.children.size(); i++){
-            this.children.get(i).preOrder(func);
+            this.children.get(i).postOrder(func);
         }
         func.accept(this);
     }

@@ -1,11 +1,10 @@
 package cbs.data.collections.trees;
 
 import java.util.function.Consumer;
-import java.util.function.Function;
 
 public class BasicTree<T> {
 
-    private BasicNode<T> root;
+    protected BasicNode<T> root;
 
     public int count() {
         return this.root.count();
